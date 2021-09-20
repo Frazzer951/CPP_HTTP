@@ -1,0 +1,95 @@
+{
+	"configurations" : 
+	[
+		{
+			"directories" : 
+			[
+				{
+					"build" : ".",
+					"minimumCMakeVersion" : 
+					{
+						"string" : "3.11.0"
+					},
+					"projectIndex" : 0,
+					"source" : ".",
+					"targetIndexes" : 
+					[
+						0,
+						1,
+						2,
+						3,
+						4
+					]
+				}
+			],
+			"name" : "Debug",
+			"projects" : 
+			[
+				{
+					"directoryIndexes" : 
+					[
+						0
+					],
+					"name" : "CPP_HTTP",
+					"targetIndexes" : 
+					[
+						0,
+						1,
+						2,
+						3,
+						4
+					]
+				}
+			],
+			"targets" : 
+			[
+				{
+					"directoryIndex" : 0,
+					"id" : "Get::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-Get-Debug-6e3d993b716cafcb4d4d.json",
+					"name" : "Get",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 0,
+					"id" : "Get_clangformat::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-Get_clangformat-Debug-731dbdb57ffcec597bb1.json",
+					"name" : "Get_clangformat",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 0,
+					"id" : "Post::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-Post-Debug-30000e3fe61c11441297.json",
+					"name" : "Post",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 0,
+					"id" : "Post_clangformat::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-Post_clangformat-Debug-6eb501ddf43ee94d31bd.json",
+					"name" : "Post_clangformat",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 0,
+					"id" : "clangformat::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-clangformat-Debug-e4c6b20e4a9260b413e5.json",
+					"name" : "clangformat",
+					"projectIndex" : 0
+				}
+			]
+		}
+	],
+	"kind" : "codemodel",
+	"paths" : 
+	{
+		"build" : "C:/dev/CPP_HTTP/build/x64-Debug",
+		"source" : "C:/dev/CPP_HTTP"
+	},
+	"version" : 
+	{
+		"major" : 2,
+		"minor" : 2
+	}
+}
