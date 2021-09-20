@@ -40,7 +40,7 @@ extern "C" char * _strdup( const char * strSource );
 #  pragma pop_macro( "WIN32_LEAN_AND_MEAN" )
 #  pragma pop_macro( "NOMINMAX" )
 #else
-#  include <errno.h>
+#  include <cerrno>
 #  include <fcntl.h>
 #  include <netdb.h>
 #  include <netinet/in.h>
@@ -225,7 +225,7 @@ namespace http
           {
             select( SelectType::write, timeout );
 
-            int       socketError;
+            int       socketError  = 0;
             socklen_t optionLength = sizeof( socketError );
             if( getsockopt( endpoint, SOL_SOCKET, SO_ERROR, &socketError, &optionLength ) == -1 )
               throw std::system_error( errno, std::system_category(), "Failed to get socket option" );
@@ -316,12 +316,11 @@ namespace http
                             ( timeout >= 0 ) ? &selectTimeout : nullptr );
 
         if( count == -1 ) throw std::system_error( errno, std::system_category(), "Failed to select socket" );
-        else if( count == 0 )
-          throw ResponseError( "Request timed out" );
+        if( count == 0 ) throw ResponseError( "Request timed out" );
 #endif    // _WIN32
       }
 
-      void close() noexcept
+      void close() const noexcept
       {
 #ifdef _WIN32
         closesocket( endpoint );
@@ -488,7 +487,7 @@ namespace http
       hints.ai_family   = getAddressFamily( internetProtocol );
       hints.ai_socktype = SOCK_STREAM;
 
-      addrinfo * info;
+      addrinfo * info = nullptr;
       if( getaddrinfo( domain.c_str(), port.c_str(), &hints, &info ) != 0 )
         throw std::system_error( getLastError(), std::system_category(), "Failed to get address info of " + domain );
 
@@ -516,8 +515,8 @@ namespace http
       socket.connect( addressInfo->ai_addr, static_cast<socklen_t>( addressInfo->ai_addrlen ),
                       ( timeout.count() >= 0 ) ? getRemainingMilliseconds( stopTime ) : -1 );
 
-      auto remaining = requestData.size();
-      auto sendData  = requestData.data();
+      auto   remaining = requestData.size();
+      auto * sendData  = requestData.data();
 
       // send the request
       while( remaining > 0 )
@@ -528,7 +527,7 @@ namespace http
         sendData += size;
       }
 
-      std::array<std::uint8_t, 4096>        tempBuffer;
+      std::array<std::uint8_t, 4096>        tempBuffer {};
       constexpr std::array<std::uint8_t, 2> crlf = { '\r', '\n' };
       Response                              response;
       std::vector<std::uint8_t>             responseData;
@@ -567,7 +566,7 @@ namespace http
               state = State::body;
               break;
             }
-            else if( state == State::statusLine )    // RFC 7230, 3.1.2. Status Line
+            if( state == State::statusLine )    // RFC 7230, 3.1.2. Status Line
             {
               state = State::headers;
 

@@ -13,7 +13,7 @@ int main()
     const auto response = request.send( "GET" );
     std::cout << "Description: " << response.description << '\n';    // print the description
     std::cout << "Headers: ";
-    for( std::string s : response.headers ) std::cout << '\t' << s << '\n';                         // print the headers
+    for( const std::string & s : response.headers ) std::cout << '\t' << s << '\n';                 // print the headers
     std::cout << "Body: " << std::string { response.body.begin(), response.body.end() } << '\n';    // print the body
   }
   catch( const std::exception & e )
