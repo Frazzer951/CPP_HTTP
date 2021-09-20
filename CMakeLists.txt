@@ -28,10 +28,12 @@ file(GLOB include_files
 )
 
 add_executable(Get src/Get.cpp ${include_files} )
-target_link_libraries(Get Ws2_32.lib)
-
 add_executable(Post src/Post.cpp ${include_files} )
-target_link_libraries(Post Ws2_32.lib)
+
+if (WIN32)
+  target_link_libraries(Get Ws2_32.lib)
+  target_link_libraries(Post Ws2_32.lib)
+endif (WIN32)
 
 target_clangformat_setup(Get)
 target_clangformat_setup(Post)
